@@ -1,2 +1,1 @@
-﻿console.log('Hello from site.ts!');
-
+﻿console.log('HelloWorld');
