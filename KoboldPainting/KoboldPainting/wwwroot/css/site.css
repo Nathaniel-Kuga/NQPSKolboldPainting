@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.welcomePageUl {
+  display: inline-block;
+  text-align: center;  
+}
+
+.welcomePageCard {
+  background: linear-gradient(to bottom, #d10728, #f5ca0e);
+}
+
+.welcomeDiv {
+  display: inline-block;
+  text-align: center;
+}
