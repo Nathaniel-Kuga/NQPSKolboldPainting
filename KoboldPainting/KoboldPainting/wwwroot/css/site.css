@@ -29,9 +29,20 @@ body {
 
 .welcomePageCard {
   background: linear-gradient(to bottom, #d10728, #f5ca0e);
+  border-radius: 10px; 
 }
 
 .welcomeDiv {
   display: inline-block;
   text-align: center;
+  margin: 25px; /* Adjust this value to add more or less space */
+}
+
+.identityDiv {
+  width: 150px; /* Adjust this value to change the width of the cards */
+  height: 90px; /* Adjust this value to change the height of the cards */
+}
+.identityDiv h3 {
+  color: black;
+
 }

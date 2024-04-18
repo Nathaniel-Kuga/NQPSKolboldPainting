@@ -1,4 +1,12 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using KoboldPainting.Areas.Identity.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -14,3 +22,53 @@
         </ul>
     </div>
 </div>
+<div class="row">
+    @* Spacer div *@
+</div>
+<div class="row justify-content-center">
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Logout"
+                       asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <div class="welcomePageCard welcomeDiv  identityDiv">
+                            <i class="bi bi-box-arrow-in-left"></i>
+                            <h3>Log Out</h3>
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Register">
+                        <div class="welcomePageCard welcomeDiv  identityDiv">
+                            <h3>Create Account</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-2 col-md-4">
+                    <a asp-area="Identity" asp-page="/Account/Login">
+                        <div class="welcomePageCard welcomeDiv  identityDiv">
+                            <h3>Log In</h3>
+                        </div>
+                    </a>
+                </div>
+            }
+
+        </div>
+
+@* @if(User.Identity.IsAuthenticated)
+{
+    <div>
+        <button class="btn btn-dark">Log out</button>
+    </div>
+}
+else
+{
+    <div>
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-dark"></a>
+    </div>
+} *@
