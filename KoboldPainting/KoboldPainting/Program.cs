@@ -1,4 +1,6 @@
 using KoboldPainting.Areas.Identity.Data;
+using KoboldPainting.DAL.Abstract;
+using KoboldPainting.DAL.Concrete;
 using KoboldPainting.Data;
 using KoboldPainting.Data.SeedingUsers;
 using KoboldPainting.Models;
@@ -22,6 +24,9 @@ var identityConnectionString = builder.Configuration.GetConnectionString("Identi
 builder.Services.AddDbContext<KoboldPaintingIdentityDbContext>(options => options
     .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
     .UseSqlServer(identityConnectionString));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IPaintRepository, PaintRepository>();
 
 var app = builder.Build();
 
