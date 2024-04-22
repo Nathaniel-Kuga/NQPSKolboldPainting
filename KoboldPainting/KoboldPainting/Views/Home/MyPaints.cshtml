@@ -1,1 +1,30 @@
+@model KoboldPainting.Models.PaintsViewModel
 
+@{ViewData["Title"] = "My Paints";}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-4">My Paints</h1>
+    </div>
+    <div class="col-4">
+        <h1>Add Paints</h1>
+        <form asp-action="AddPaint" asp-controller="Paint" method="post">
+            <div class="form-group">
+                <label asp-for="Paint"></label>
+                <input asp-for="Paint" class="form-control" />
+                <span asp-validation-for="Paint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Company"></label>
+                <input asp-for="Company" class="form-control" />
+                <span asp-validation-for="Company" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaintType"></label>
+                <input asp-for="PaintType" class="form-control" />
+                <span asp-validation-for="PaintType" class="text-danger"></span>
+            </div> 
+            <button type="submit" class="btn btn-primary" >Add Paint</button>
+        </form>
+    </div>
+</div>

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using KoboldPainting.DAL.Abstract;
 using KoboldPainting.Models;
 
-namespace Team121GBCapstoneProject.DAL.Concrete
+namespace KoboldPainting.DAL.Concrete
 {
     /// <summary>
     /// Base class repository that implements common and CRUD operations.  Meant to be like an abstract 
