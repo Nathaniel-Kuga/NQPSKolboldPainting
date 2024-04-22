@@ -1,4 +1,5 @@
 ﻿using KoboldPainting.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,6 +18,9 @@ namespace KoboldPainting.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public IActionResult MyPaints() => View();
 
         public IActionResult Privacy()
         {
