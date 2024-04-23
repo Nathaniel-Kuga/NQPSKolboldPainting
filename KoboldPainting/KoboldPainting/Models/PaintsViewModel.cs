@@ -1,13 +1,23 @@
+using System.ComponentModel.DataAnnotations;
 using KoboldPainting.Models;
 
 namespace KoboldPainting.Models;
 
 public class PaintsViewModel
 {
-    public Paint Paint { get; set; }
-    public Company Company { get; set; }
-    public PaintType PaintType { get; set; }
-    // public IEnumerable<Paint> Paints { get; set; }
+    [Required(ErrorMessage = "Paint is required.")]
+    public string Paint { get; set; }
+
+    [Required(ErrorMessage = "Company is required.")]
+    public int SelectedCompany { get; set; }
+
+    [Required(ErrorMessage = "PaintType is required.")]
+    public int SelectedPaintType { get; set; }
+
+    public List<Company> Companies { get; set; } = new List<Company>();
+    public List<PaintType> PaintTypes { get; set; } = new List<PaintType>();
+    public string ResultMessage { get; set; } = "";
+}
+// public IEnumerable<Paint> Paints { get; set; }
     // public IEnumerable<Company> Companies { get; set; }
     // public IEnumerable<PaintType> PaintTypes { get; set; }
-}

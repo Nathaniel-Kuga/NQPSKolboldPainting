@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using KoboldPainting.Models;
 using KoboldPainting.DAL.Abstract;
+using FuzzySharp;
 
 namespace KoboldPainting.DAL.Concrete
 {
@@ -8,6 +9,34 @@ namespace KoboldPainting.DAL.Concrete
     {
         public PaintRepository(KoboldPaintingDbContext context) : base(context)
         {
+        }
+
+        public List<Paint> FuzzySearch(string paintName)
+        {
+            if (string.IsNullOrEmpty(paintName))
+            {
+                return new List<Paint>();
+            }
+
+            var potentialPaintMatches = GetAll().Where(p => p.PaintName.Contains(paintName)).ToList();
+            var paintsToReturn = new List<Paint>();
+
+            if (potentialPaintMatches.Count == 0)
+            {
+                // add paint there are no matches
+                return new List<Paint>();
+            }
+            else
+            {
+                foreach (var paint in potentialPaintMatches)
+                {
+                    if (Fuzz.Ratio(paintName, paint.PaintName) > 90)
+                    {
+                        paintsToReturn.Add(paint);
+                    }
+                }
+            }
+            return paintsToReturn;
         }
     }
 }

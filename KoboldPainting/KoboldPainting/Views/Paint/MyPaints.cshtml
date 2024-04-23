@@ -1,0 +1,39 @@
+@model KoboldPainting.Models.PaintsViewModel
+
+@{
+    ViewData["Title"] = "My Paints";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-4">My Paints</h1>
+    </div>
+    <div class="col-4">
+        <h1>Add Paints</h1>
+        <form asp-action="MyPaints" asp-controller="Paint" method="post">
+            <div class="form-group">
+                <label asp-for="Paint"></label>
+                <input asp-for="Paint" class="form-control" />
+                <span asp-validation-for="Paint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedCompany">Company</label>
+                @* <input asp-for="Company" class="form-control" /> *@
+                <select asp-for="SelectedCompany" asp-items="@(new SelectList(Model.Companies, "Id", "CompanyName"))" class="form-control"></select>
+                    @* <option value="">Select a company</option> *@
+                </select>
+
+                <span asp-validation-for="SelectedCompany" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="SelectedPaintType">Paint Type</label>
+                @* <input asp-for="PaintType" class="form-control" /> *@
+                 <select asp-for="SelectedPaintType" asp-items="@(new SelectList(Model.PaintTypes, "Id", "TypeOfPaint"))" class="form-control"></select>
+                    @* <option value="">Select a Paint Type</option> *@
+                </select>
+                <span asp-validation-for="SelectedPaintType" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Paint</button>
+        </form>
+    </div>
+</div>

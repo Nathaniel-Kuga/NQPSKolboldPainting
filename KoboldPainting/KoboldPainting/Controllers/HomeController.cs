@@ -19,8 +19,8 @@ namespace KoboldPainting.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult MyPaints() => View();
+        // [Authorize]
+        // public IActionResult MyPaints() => View();
 
         public IActionResult Privacy()
         {

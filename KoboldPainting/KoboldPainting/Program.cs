@@ -27,7 +27,8 @@ builder.Services.AddDbContext<KoboldPaintingIdentityDbContext>(options => option
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IPaintRepository, PaintRepository>();
-
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
 var app = builder.Build();
 
 // ! Seed users

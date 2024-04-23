@@ -30,8 +30,8 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 <div class="col-xl-2 col-md-4">
-                    <a asp-controller="Home" asp-action="MyPaints"
-                    asp-route-returnUrl="@Url.Action("MyPaints", "Home", new { area = "" })">
+                    <a asp-controller="Paint" asp-action="MyPaints"
+                    asp-route-returnUrl="@Url.Action("MyPaints", "Paint", new { area = "" })">
                         <div class="welcomePageCard welcomeDiv  identityDiv">
                             <i class="bi bi-box-arrow-in-left"></i>
                             <h3>My Paints</h3>
