@@ -19,21 +19,44 @@
             <div class="form-group">
                 <label asp-for="SelectedCompany">Company</label>
                 @* <input asp-for="Company" class="form-control" /> *@
-                <select asp-for="SelectedCompany" asp-items="@(new SelectList(Model.Companies, "Id", "CompanyName"))" class="form-control"></select>
-                    @* <option value="">Select a company</option> *@
+                <select asp-for="SelectedCompany" asp-items="@(new SelectList(Model.Companies, "Id", "CompanyName"))"
+                    class="form-control"></select>
+                @* <option value="">Select a company</option> *@
                 </select>
 
                 <span asp-validation-for="SelectedCompany" class="text-danger"></span>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="SelectedPaintType">Paint Type</label>
                 @* <input asp-for="PaintType" class="form-control" /> *@
-                 <select asp-for="SelectedPaintType" asp-items="@(new SelectList(Model.PaintTypes, "Id", "TypeOfPaint"))" class="form-control"></select>
-                    @* <option value="">Select a Paint Type</option> *@
+                <select asp-for="SelectedPaintType" asp-items="@(new SelectList(Model.PaintTypes, "Id", "TypeOfPaint"))"
+                    class="form-control"></select>
+                @* <option value="">Select a Paint Type</option> *@
                 </select>
                 <span asp-validation-for="SelectedPaintType" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Add Paint</button>
         </form>
     </div>
+    @if (Model.IsFormSubmitted)
+    {
+        @if (!Model.IsSuccess)
+        {
+            <div class="col-8">
+                <div class="alert alert-danger alert-dismissable" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h1>@Model.ResultMessage</h1>
+                </div>
+            </div>
+        }
+        @if (Model.IsSuccess)
+        {
+            <div class="col-8">
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <h1>@Model.ResultMessage</h1>
+                </div>
+            </div>
+        }
+    }
 </div>
