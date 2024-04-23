@@ -43,7 +43,8 @@ namespace KoboldPainting.Controllers
         [HttpPost]
         public IActionResult MyPaints(PaintsViewModel paintToAddVM)
         {
-            // Attempt to add
+            // * form has been submitted and therefore is always true
+            paintToAddVM.IsFormSubmitted = true;
             if (!ModelState.IsValid)
             {
                 // foreach (var modelState in ModelState.Values)
@@ -57,7 +58,10 @@ namespace KoboldPainting.Controllers
                 paintToAddVM.PaintTypes = _paintTypeRepository.GetAll().ToList();
                 return View(paintToAddVM);
             }
-
+            // * Model is valid, proceed
+            // * Trim whitespace from input
+            paintToAddVM.Paint = paintToAddVM.Paint.Trim();
+            // * check if paint already exists
             bool paintExists = _paintRepository.GetAll().Any(p => p.PaintName == paintToAddVM.Paint);
             if (paintExists)
             {
@@ -67,17 +71,17 @@ namespace KoboldPainting.Controllers
                 return View(paintToAddVM);
             }
 
+            // * Exact match not found, check for fuzzy match
             if (!paintExists)
             {
-                // verify paintToAddVM name is not taken using fuzzy search
                 var paintNameMatches = _paintRepository.FuzzySearch(paintToAddVM.Paint);
                 if (paintNameMatches.Count > 0)
                 {
                     paintToAddVM.ResultMessage = "Paint already exists";
                     paintToAddVM.Companies = _companyRepository.GetAll().ToList();
                     paintToAddVM.PaintTypes = _paintTypeRepository.GetAll().ToList();
-                    return View(paintToAddVM);
                 }
+                //* no fuzzy match found, add paint to db
                 if (paintNameMatches.Count == 0)
                 {
                     var paintToAddToDb = new Paint
@@ -90,7 +94,7 @@ namespace KoboldPainting.Controllers
                     paintToAddVM.ResultMessage = "Success! Paint added!";
                     paintToAddVM.Companies = _companyRepository.GetAll().ToList();
                     paintToAddVM.PaintTypes = _paintTypeRepository.GetAll().ToList();
-                    return View(paintToAddVM);
+                    paintToAddVM.IsSuccess = true;
                 }
 
             }

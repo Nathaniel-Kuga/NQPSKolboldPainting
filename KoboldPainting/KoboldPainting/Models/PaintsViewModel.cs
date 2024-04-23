@@ -17,7 +17,6 @@ public class PaintsViewModel
     public List<Company> Companies { get; set; } = new List<Company>();
     public List<PaintType> PaintTypes { get; set; } = new List<PaintType>();
     public string ResultMessage { get; set; } = "";
+    public bool IsSuccess { get; set; } = false;
+    public bool IsFormSubmitted { get; set; } = false;
 }
-// public IEnumerable<Paint> Paints { get; set; }
-    // public IEnumerable<Company> Companies { get; set; }
-    // public IEnumerable<PaintType> PaintTypes { get; set; }
