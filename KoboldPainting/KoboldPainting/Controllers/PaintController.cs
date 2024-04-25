@@ -32,11 +32,14 @@ namespace KoboldPainting.Controllers
         [Authorize]
         public IActionResult MyPaints()
         {
-            var paintsVM = new PaintsViewModel
-            {
-                Companies = _companyRepository.GetAll().ToList(),
-                PaintTypes = _paintTypeRepository.GetAll().ToList()
-            };
+            var paintsVM = new PaintsViewModel();
+
+            var Companies = _companyRepository.GetAll().ToList();
+            var PaintTypes = _paintTypeRepository.GetAll().ToList();
+
+            paintsVM.Companies = Companies;
+            paintsVM.PaintTypes = PaintTypes;
+            
             return View(paintsVM);
         }
 

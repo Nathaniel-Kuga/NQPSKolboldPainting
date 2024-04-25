@@ -13,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<KoboldPaintingDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseLazyLoadingProxies()
+           .UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -33,7 +34,7 @@ var app = builder.Build();
 
 // ! Seed users
 // ! turn off for azure
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
    var services = scope.ServiceProvider;
    try
@@ -47,7 +48,7 @@ using (var scope = app.Services.CreateScope())
        Console.WriteLine(e);
        throw new Exception("Couldn't seed users.");
    }
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
