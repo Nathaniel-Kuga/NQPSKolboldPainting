@@ -32,11 +32,14 @@ namespace KoboldPainting.Controllers
         [Authorize]
         public IActionResult MyPaints()
         {
-            var paintsVM = new PaintsViewModel
-            {
-                Companies = _companyRepository.GetAll().ToList(),
-                PaintTypes = _paintTypeRepository.GetAll().ToList()
-            };
+            var paintsVM = new PaintsViewModel();
+
+            var Companies = _companyRepository.GetAll().ToList();
+            var PaintTypes = _paintTypeRepository.GetAll().ToList();
+
+            paintsVM.Companies = Companies;
+            paintsVM.PaintTypes = PaintTypes;
+            
             return View(paintsVM);
         }
 
@@ -74,7 +77,7 @@ namespace KoboldPainting.Controllers
             // * Exact match not found, check for fuzzy match
             if (!paintExists)
             {
-                var paintNameMatches = _paintRepository.FuzzySearch(paintToAddVM.Paint);
+                var paintNameMatches = _paintRepository.FuzzySearch(paintToAddVM.Paint, 90);
                 if (paintNameMatches.Count > 0)
                 {
                     paintToAddVM.ResultMessage = "Paint already exists";
