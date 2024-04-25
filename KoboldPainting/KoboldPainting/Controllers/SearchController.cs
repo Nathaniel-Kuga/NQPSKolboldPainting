@@ -10,21 +10,25 @@ namespace KoboldPainting.Controllers
     public class SearchController : Controller
     {
         private readonly IPaintRepository _paintRepository;
-        public SearchController(IPaintRepository paintRepository)
+        private readonly ICompanyRepository _companyRepository;
+        public SearchController(IPaintRepository paintRepository, ICompanyRepository companyRepository)
         {
             _paintRepository = paintRepository;
+            _companyRepository = companyRepository;
         }
 
         [Authorize]
         public IActionResult Index()
         {
-            return View();
+            PaintsViewModel pv = new PaintsViewModel();
+            pv.Companies = _companyRepository.GetAll().ToList();
+            return View("Index", pv);
         }
 
         [Authorize]
-        public IActionResult PaintSearch(string PaintName, string SelectedCompany)
+        public IActionResult PaintSearch(PaintsViewModel pv)
         {
-            List<Paint> paintsToDisplay = _paintRepository.searchPaints(PaintName);
+            List<Paint> paintsToDisplay = _paintRepository.searchPaints(pv.Paint, pv.SelectedCompany);
             return View("SearchResults", paintsToDisplay);
         }
     }

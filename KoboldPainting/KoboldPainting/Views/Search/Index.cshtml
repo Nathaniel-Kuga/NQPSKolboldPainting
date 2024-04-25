@@ -1,4 +1,4 @@
-﻿@model KoboldPainting.Models.Paint
+﻿@model KoboldPainting.Models.PaintsViewModel
 
 
 <div id="beginnerDiv" class="text-center card welcomePageCard">
@@ -12,24 +12,21 @@
 <form id="searchForm" action="/Search/PaintSearch/">
 <div class="form-group">
     <label for="paintName" style="margin-top: 2%;">Paint Name:</label>
-    <input class="form-control" id="PaintName" placeholder="Enter Paint Name" asp-for="PaintName">
-        
-       @*  <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Company Name
-            </button>
-            <div asp-for="SelectedCompany" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Unknown</a>
-                <a class="dropdown-item" href="#">Citadel</a>
-                <a class="dropdown-item" href="#">The Army Painter</a>
-                <a class="dropdown-item" href="#">Vallejo</a>
-                <a class="dropdown-item" href="#">Ak Interactive</a>
-                <a class="dropdown-item" href="#">Dirty Down</a>
-                <a class="dropdown-item" href="#">Pro Acryl</a>
-                <a class="dropdown-item" href="#">Two Thin Coats</a>
-                <a class="dropdown-item" href="#">Coat DArms</a>
-            </div>
-        </div>  *@
+    <input class="form-control" id="PaintName" placeholder="Enter Paint Name" asp-for="Paint">
+        <div class="form-group">
+            <label asp-for="SelectedCompany">Company</label>
+            @* <input asp-for="Company" class="form-control" /> *@
+            <select asp-for="SelectedCompany" asp-items="@(new SelectList(Model.Companies, "Id", "CompanyName"))"
+                    class="form-control"></select>
+            @* <option value="">Select a company</option> *@
+            </select>
+
+            <span asp-validation-for="SelectedCompany" class="text-danger"></span>
+        </div>
+
+   @*<label for="companyName" style="margin-top: 2%;">Company Name:</label>
+   <input class="form-control" id="CompanyName" placeholder="Enter Company Name" asp-for="SelectedCompany">  
+ *@
 </div>
   <button type="submit" class="btn btn-primary" style="margin-top: 2%; text-align: center;" asp-controller="Search" asp-action="PaintSearch">Submit</button>
 </form>

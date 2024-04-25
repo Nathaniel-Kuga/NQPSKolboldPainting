@@ -39,11 +39,16 @@ namespace KoboldPainting.DAL.Concrete
             return paintsToReturn;
         }
 
-        public List<Paint> searchPaints(string PaintName)
+        public List<Paint> searchPaints(string PaintName, int CompanyID)
         {
             //use fuzzy 
             List<Paint> paintsToReturn = FuzzySearch(PaintName, 70);
             //if the company is not empty then filter it
+            if (CompanyID != 1)
+            {
+                List<Paint> refinedList = paintsToReturn.Where(p => p.CompanyId == CompanyID).ToList();
+                return refinedList;
+            }
 
 
             return paintsToReturn;

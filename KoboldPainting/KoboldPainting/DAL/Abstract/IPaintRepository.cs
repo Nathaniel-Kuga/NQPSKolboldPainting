@@ -15,6 +15,6 @@ namespace KoboldPainting.DAL.Abstract
         /// <returns>Resturns list of games that contain the paint name</returns>
         public List<Paint> FuzzySearch(string paintName, int percentage);
 
-        public List<Paint> searchPaints(string PaintName);
+        public List<Paint> searchPaints(string PaintName, int CompanyID);
     }
 }

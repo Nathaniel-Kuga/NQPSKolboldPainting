@@ -10,14 +10,15 @@ INSERT INTO [KoboldUser] ([AspNetUserID], [FirstName], [LastName]) VALUES ('erfe
 --INSERT INTO [Tutorials] ([KoboldUser], [VideoUrl]) VALUES (2, 'https://www.youtube.com/watch?v=P9b0gxk3c6s&ab_channel=MidwinterMinis');
 
 --Inserting into Company
-INSERT INTO [Company] ([CompanyName]) VALUES ('Citadel'); --1
-INSERT INTO [Company] ([CompanyName]) VALUES ('The Army Painter'); --2
-INSERT INTO [Company] ([CompanyName]) VALUES ('Vallejo'); --3
-INSERT INTO [Company] ([CompanyName]) VALUES ('Ak Interactive'); --4
-INSERT INTO [Company] ([CompanyName]) VALUES ('Dirty Down'); --5
-INSERT INTO [Company] ([CompanyName]) VALUES ('Pro Acryl'); --6
-INSERT INTO [Company] ([CompanyName]) VALUES ('Two Thin Coats'); --7
-INSERT INTO [Company] ([CompanyName]) VALUES ('Coat DArms'); --8
+INSERT INTO [Company] ([CompanyName]) VALUES ('Unknown / Not Available'); --1
+INSERT INTO [Company] ([CompanyName]) VALUES ('Citadel'); --2
+INSERT INTO [Company] ([CompanyName]) VALUES ('The Army Painter'); --3
+INSERT INTO [Company] ([CompanyName]) VALUES ('Vallejo'); --4
+INSERT INTO [Company] ([CompanyName]) VALUES ('Ak Interactive'); --5
+INSERT INTO [Company] ([CompanyName]) VALUES ('Dirty Down'); --6
+INSERT INTO [Company] ([CompanyName]) VALUES ('Pro Acryl'); --7
+INSERT INTO [Company] ([CompanyName]) VALUES ('Two Thin Coats'); --8
+INSERT INTO [Company] ([CompanyName]) VALUES ('Coat DArms'); --9
 
 
 --Inserting into PaintType
@@ -34,18 +35,17 @@ INSERT INTO [PaintType] ([TypeOfPaint]) VALUES ('Basing Material'); --10
 
 --Inserting into Paints
 
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Averland Sunset', 1, 1); --1
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Mephiston Red', 1, 1); --2
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Iron Warriors', 1, 1); --3
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('TrollSlayer Orange', 1, 2); --4
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Iron Warriors', 1, 1); --5
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Agrax Earthshade', 1, 3); --6
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Lahmian Medium', 1, 7); --7
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Black', 3, 1); --8
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Bold Titanuim White', 6, 1); --9
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Muddy Ground', 4, 6); --10
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Puddles', 4, 10); --11
-INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Magic Metal', 8, 1); --12
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Averland Sunset', 2, 1); --1
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Mephiston Red', 2, 1); --2
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Iron Warriors', 2, 1); --3
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('TrollSlayer Orange', 2, 2); --4
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Agrax Earthshade', 2, 3); --5
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Lahmian Medium', 2, 7); --6
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Black', 4, 1); --7
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Bold Titanuim White', 7, 1); --8
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Muddy Ground', 5, 6); --9
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Puddles', 5, 10); --10
+INSERT INTO [Paints] ([PaintName], [CompanyID], [PaintTypeID]) VALUES ('Magic Metal', 9, 1); --11
 
 --Inserting into OwnedPaint
 INSERT INTO [OwnedPaint] ([KoboldUserID], [PaintID]) VALUES (1, 1);
