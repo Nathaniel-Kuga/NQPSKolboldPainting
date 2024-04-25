@@ -77,7 +77,7 @@ namespace KoboldPainting.Controllers
             // * Exact match not found, check for fuzzy match
             if (!paintExists)
             {
-                var paintNameMatches = _paintRepository.FuzzySearch(paintToAddVM.Paint);
+                var paintNameMatches = _paintRepository.FuzzySearch(paintToAddVM.Paint, 90);
                 if (paintNameMatches.Count > 0)
                 {
                     paintToAddVM.ResultMessage = "Paint already exists";

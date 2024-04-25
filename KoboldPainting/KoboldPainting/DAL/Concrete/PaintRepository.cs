@@ -11,7 +11,7 @@ namespace KoboldPainting.DAL.Concrete
         {
         }
 
-        public List<Paint> FuzzySearch(string paintName)
+        public List<Paint> FuzzySearch(string paintName, int percentage)
         {
             if (string.IsNullOrEmpty(paintName))
             {
@@ -30,12 +30,22 @@ namespace KoboldPainting.DAL.Concrete
             {
                 foreach (var paint in potentialPaintMatches)
                 {
-                    if (Fuzz.Ratio(paintName, paint.PaintName) > 90)
+                    if (Fuzz.Ratio(paintName, paint.PaintName) > percentage)
                     {
                         paintsToReturn.Add(paint);
                     }
                 }
             }
+            return paintsToReturn;
+        }
+
+        public List<Paint> searchPaints(string PaintName)
+        {
+            //use fuzzy 
+            List<Paint> paintsToReturn = FuzzySearch(PaintName, 70);
+            //if the company is not empty then filter it
+
+
             return paintsToReturn;
         }
     }

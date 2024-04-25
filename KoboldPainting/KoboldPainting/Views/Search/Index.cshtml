@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model KoboldPainting.Models.Paint
+
+
+<div id="beginnerDiv" class="text-center card welcomePageCard">
+    <div class="welcomeDiv">
+        <h1 class="display-4" style="font-weight: bold">Welcome to the Search Page!</h1>
+        <h3>You can use this to search your favorite paints to learn more about them!</h3>
+        <h4>Simply type in your paint name and click the search button</h4>
+    </div>
+</div>
+
+<form id="searchForm" action="/Search/PaintSearch/">
+<div class="form-group">
+    <label for="paintName" style="margin-top: 2%;">Paint Name:</label>
+    <input class="form-control" id="PaintName" placeholder="Enter Paint Name" asp-for="PaintName">
+        
+       @*  <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Company Name
+            </button>
+            <div asp-for="SelectedCompany" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Unknown</a>
+                <a class="dropdown-item" href="#">Citadel</a>
+                <a class="dropdown-item" href="#">The Army Painter</a>
+                <a class="dropdown-item" href="#">Vallejo</a>
+                <a class="dropdown-item" href="#">Ak Interactive</a>
+                <a class="dropdown-item" href="#">Dirty Down</a>
+                <a class="dropdown-item" href="#">Pro Acryl</a>
+                <a class="dropdown-item" href="#">Two Thin Coats</a>
+                <a class="dropdown-item" href="#">Coat DArms</a>
+            </div>
+        </div>  *@
+</div>
+  <button type="submit" class="btn btn-primary" style="margin-top: 2%; text-align: center;" asp-controller="Search" asp-action="PaintSearch">Submit</button>
+</form>

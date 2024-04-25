@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Paint>
+
+<div id="beginnerDiv" class="text-center card welcomePageCard">
+    <div class="welcomeDiv">
+        <h1 style="font-weight: bolder;">Search Results</h1>
+        <h5 style="font-weight: bold;">
+            Here are the results of your search? If the results did not have the paint you were looking for it could be becuase of a mispelling or becauase
+            it is not in our database.Please check your spelling for mistakes and if that does not work please add it to our database by using the "My Paints"
+            button on the home page.
+        </h5>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Brand</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+            @foreach (var paint in Model)
+            {
+            <tr>
+                <td>@paint.PaintName</td>
+                <td>@paint.Company.CompanyName</td>
+            </tr>
+            }
+        
+    </tbody>
+</table>
