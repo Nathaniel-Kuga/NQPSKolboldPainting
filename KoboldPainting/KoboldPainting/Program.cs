@@ -1,4 +1,6 @@
 using KoboldPainting.Areas.Identity.Data;
+using KoboldPainting.DAL.Abstract;
+using KoboldPainting.DAL.Concrete;
 using KoboldPainting.Data;
 using KoboldPainting.Data.SeedingUsers;
 using KoboldPainting.Models;
@@ -11,7 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<KoboldPaintingDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseLazyLoadingProxies()
+           .UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -23,11 +26,15 @@ builder.Services.AddDbContext<KoboldPaintingIdentityDbContext>(options => option
     .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
     .UseSqlServer(identityConnectionString));
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IPaintRepository, PaintRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
 var app = builder.Build();
 
 // ! Seed users
 // ! turn off for azure
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
    var services = scope.ServiceProvider;
    try
@@ -41,7 +48,7 @@ using (var scope = app.Services.CreateScope())
        Console.WriteLine(e);
        throw new Exception("Couldn't seed users.");
    }
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
