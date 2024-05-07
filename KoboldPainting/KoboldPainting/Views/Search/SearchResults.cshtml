@@ -1,32 +1,87 @@
-﻿@model IEnumerable<Paint>
+﻿@using Microsoft.IdentityModel.Tokens
+@* @model IEnumerable<Paint> *@
+@model KoboldPainting.Models.PaintsViewModel
 
 <div id="beginnerDiv" class="text-center card welcomePageCard">
     <div class="welcomeDiv">
         <h1 style="font-weight: bolder;">Search Results</h1>
         <h5 style="font-weight: bold;">
-            Here are the results of your search? If the results did not have the paint you were looking for it could be becuase of a mispelling or becauase
-            it is not in our database.Please check your spelling for mistakes and if that does not work please add it to our database by using the "My Paints"
+            Here are the results of your search? If the results did not have the paint you were looking for it could be
+            becuase of a mispelling or becauase
+            it is not in our database.Please check your spelling for mistakes and if that does not work please add it to
+            our database by using the "My Paints"
             button on the home page.
         </h5>
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Brand</th>
-        </tr>
-    </thead>
-    <tbody>
-       
-            @foreach (var paint in Model)
+@{
+    bool showAddPaints = Model.Paints.IsNullOrEmpty();
+    if (!showAddPaints)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Brand</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var paint in Model.Paints)
+                {
+                    <tr>
+                        <td>@paint.PaintName</td>
+                        <td>@paint.Company.CompanyName</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h1>Add Paints</h1>
+        <form asp-action="SearchResults" asp-controller="Search" method="post">
+            <div class="form-group">
+                <label asp-for="Paint"></label>
+                <input asp-for="Paint" class="form-control" />
+                <span asp-validation-for="Paint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedCompany">Company</label>
+                <select asp-for="SelectedCompany" asp-items="@(new SelectList(Model.Companies, "Id", "CompanyName"))"
+                    class="form-control"></select>
+                <span asp-validation-for="SelectedCompany" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedPaintType">Paint Type</label>
+                <select asp-for="SelectedPaintType" asp-items="@(new SelectList(Model.PaintTypes, "Id", "TypeOfPaint"))"
+                    class="form-control"></select>
+                <span asp-validation-for="SelectedPaintType" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Paint</button>
+        </form>
+        if (Model.IsFormSubmitted)
+        {
+            if (!Model.IsSuccess)
             {
-            <tr>
-                <td>@paint.PaintName</td>
-                <td>@paint.Company.CompanyName</td>
-            </tr>
+                <div class="col-8">
+                    <div class="alert alert-danger alert-dismissable" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <h1>@Model.ResultMessage</h1>
+                    </div>
+                </div>
             }
-        
-    </tbody>
-</table>
+            if (Model.IsSuccess)
+            {
+                <div class="col-8">
+                    <div class="alert alert-success alert-dismissable" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <h1>@Model.ResultMessage</h1>
+                    </div>
+                </div>
+            }
+        }
+    }
+}
