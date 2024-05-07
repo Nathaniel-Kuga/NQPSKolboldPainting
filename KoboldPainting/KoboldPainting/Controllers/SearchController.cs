@@ -30,9 +30,12 @@ namespace KoboldPainting.Controllers
         [Authorize]
         public IActionResult PaintSearch(PaintsViewModel pv)
         {
-            var paintsViewModel = new PaintsViewModel();
-            
-            paintsViewModel.Paints = _paintRepository.searchPaints(pv.Paint, pv.SelectedCompany);
+            var paintsViewModel = new PaintsViewModel
+            {
+                Paints = _paintRepository.searchPaints(pv.Paint, pv.SelectedCompany),
+                Companies = _companyRepository.GetAll().ToList(),
+                PaintTypes = _paintTypeRepository.GetAll().ToList()
+            };
             return View("SearchResults", paintsViewModel);
         }
 
