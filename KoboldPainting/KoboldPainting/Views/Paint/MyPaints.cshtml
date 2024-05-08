@@ -5,8 +5,29 @@
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 card myPaintsPageCard welcomeDiv">
         <h1 class="display-4">My Paints</h1>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paint Name</th>
+                    <th>Company</th>
+                    <th>Paint Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @* @foreach (var paint in Model.Paints)
+                {
+                    <tr>
+                        <td>@paint.PaintName</td>
+                        <td>@paint.Company.CompanyName</td>
+                        <td>@paint.PaintType.TypeOfPaint</td>
+                    </tr>
+                } *@
+            </tbody>
+        </table>
     </div>
     <div class="col-4">
         <h1>Add Paints</h1>
