@@ -48,51 +48,47 @@ public class SeedUsers
                     {
                         // Doesn't already exist, so add a new user
                         context.Add(kolboldUser);
-                        var koboldUserPaintRecipes = new PaintRecipe()
-                        {
-                            KoboldUserId = kolboldUser.Id,
-                            KoboldUser = kolboldUser,
-                            RecipeName = u.FirstName + " " + u.LastName +  " Test Recipe",
-                            Description = "Test Description",
-                        };
-                        context.Add(koboldUserPaintRecipes);
                         await context.SaveChangesAsync();
-
-                        //! Causes error
-                        // ! "Unable to track an instance of type 'WantedPaint' because it does not have a primary key. Only entity types with a primary key may be tracked."
-                        // var koboldUserWantedPaint = new WantedPaint()
-                        // {
-                        //     KoboldUserId = kolboldUser.Id,
-                        //     KoboldUser = kolboldUser,
-                        //     PaintId = 1
-                        // };
-                        // context.Add(koboldUserWantedPaint);
-
-                        var koboldUserOwnedPaint = new OwnedPaint()
-                        {
-                            KoboldUserId = kolboldUser.Id,
-                            KoboldUser = kolboldUser
-                        };
-                        context.Add(koboldUserOwnedPaint);
-                        await context.SaveChangesAsync();
-                        // var koboldUserRefillPaint = new RefillPaint()
-                        // {
-                        //     KoboldUserId = kolboldUser.Id,
-                        //     KoboldUser = kolboldUser
-                        // };
-                        // context.Add(koboldUserRefillPaint);
+                        await SeedOwnedPaints(context, u);
                     }
-                    await context.SaveChangesAsync();                
+                }
             }
-        }
         }
         catch (InvalidOperationException ex)
         {
             // Thrown if there is no service of the type requested from the service provider
             // Catch it (and don't throw the exception below) if you don't want it to fail (5xx status code)
             throw new Exception("Failed to initialize user seed data, service provider did not have the correct service");
-}
+        }
     }
+
+
+    public static async Task SeedOwnedPaints(KoboldPaintingDbContext context, UserInfoData user)
+    {
+        var koboldUser = context.KoboldUsers.FirstOrDefault(u => u.FirstName == user.FirstName && u.LastName == user.LastName);
+        if (koboldUser != null)
+        {
+            // Iterate over the OwnedPaints of the user
+            foreach (var ownedPaint in user.UserOwnedPaints)
+            {
+                // Add the owned paint to the context
+                context.OwnedPaints.Add(ownedPaint);
+            }
+            // Save the changes
+            await context.SaveChangesAsync();
+            // // Check if any owned paints exist
+            // if (!context.OwnedPaint.Any())
+            // {
+
+            //     // Add the owned paints to the context
+            //     await context.OwnedPaint.AddRangeAsync(ownedPaints);
+
+            //     // Save the changes
+            //     await context.SaveChangesAsync();
+            // }
+        }
+    }
+
 
     /// <summary>
     /// Helper method to ensure that the Identity user exists or has been newly created.  Modified from
@@ -106,25 +102,73 @@ public class SeedUsers
     /// <returns>The Identity ID of the user</returns>
     private static async Task<string> EnsureUser(UserManager<ApplicationUser> userManager, string password, string username
                                                 , string email, bool emailConfirmed, string firstName, string lastName)
-{
-    var user = await userManager.FindByNameAsync(username);
-    if (user == null)
     {
-        user = new ApplicationUser()
+        var user = await userManager.FindByNameAsync(username);
+        if (user == null)
         {
-            UserName = username,
-            Email = email,
-            EmailConfirmed = emailConfirmed,
-            FirstName = firstName,
-            LastName = lastName
-        };
-        await userManager.CreateAsync(user, password);
-    }
-    if (user == null)
-    {
-        throw new Exception("The password is probably not strong enough!");
-    }
+            user = new ApplicationUser()
+            {
+                UserName = username,
+                Email = email,
+                EmailConfirmed = emailConfirmed,
+                FirstName = firstName,
+                LastName = lastName
+            };
+            await userManager.CreateAsync(user, password);
+        }
+        if (user == null)
+        {
+            throw new Exception("The password is probably not strong enough!");
+        }
 
-    return user.Id;
+        return user.Id;
+    }
 }
-}
+
+
+// var koboldUserPaintRecipes = new PaintRecipe()
+// {
+//     KoboldUserId = kolboldUser.Id,
+//     KoboldUser = kolboldUser,
+//     RecipeName = u.FirstName + " " + u.LastName +  " Test Recipe",
+//     Description = "Test Description",
+// };
+// context.Add(koboldUserPaintRecipes);
+// await context.SaveChangesAsync();
+
+//! Causes error
+// ! "Unable to track an instance of type 'WantedPaint' because it does not have a primary key. Only entity types with a primary key may be tracked."
+// var koboldUserWantedPaint = new WantedPaint()
+// {
+//     KoboldUserId = kolboldUser.Id,
+//     KoboldUser = kolboldUser,
+//     PaintId = 1
+// };
+// context.Add(koboldUserWantedPaint);
+
+// var koboldUserOwnedPaint = new OwnedPaint()
+// {
+//     KoboldUserId = kolboldUser.Id,
+//     KoboldUser = kolboldUser,
+//     PaintId = u.PaintId
+
+// };
+// context.Add(koboldUserOwnedPaint);
+// await context.SaveChangesAsync();
+// var koboldUserRefillPaint = new RefillPaint()
+// {
+//     KoboldUserId = kolboldUser.Id,
+//     KoboldUser = kolboldUser
+// };
+// context.Add(koboldUserRefillPaint);
+
+// foreach (var ownedPaint in u.UserOwnedPaints)
+// {
+//     var koboldUserOwnedPaint = new OwnedPaint()
+//     {
+//         KoboldUserId = kolboldUser.Id,
+//         PaintId = ownedPaint.PaintId,
+//     };
+//     context.Add(koboldUserOwnedPaint);
+// }
+// await context.SaveChangesAsync();

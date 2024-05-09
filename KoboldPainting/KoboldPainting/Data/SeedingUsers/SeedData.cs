@@ -28,19 +28,7 @@ public class UserInfoData
     //     //     KolboldUserId = 1
     //     // }
     // };
-    public List<OwnedPaint> UserOwnedPaints { get; set; } = new List<OwnedPaint>()
-    {
-        new OwnedPaint
-        {
-            PaintId = 1,
-            KoboldUserId = 1
-        }
-        // new OwnedPaint
-        // {
-        //     PaintId = 1,
-        //     KolboldUserId = 1
-        // }
-    };
+    public List<OwnedPaint> UserOwnedPaints { get; set; } = new List<OwnedPaint>();
     // public List<WantedPaint> UserWantedPaints { get; set; } = new List<WantedPaint>()
     // {
     //     // new WantedPaint
@@ -80,8 +68,11 @@ public class SeedData
         new UserInfoData { UserName = "TaliaK", Email = "knott@example.com",
                             FirstName = "Talia", LastName = "Knott", OwnedPaint = 1,
                             WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0,
-                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 1 } }
-        // new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com", FirstName = "Zayden", LastName = "Clark", OwnedPaint = 0, WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0 },
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 1 }}},
+        new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com",
+                            FirstName = "Zayden", LastName = "Clark", OwnedPaint = 0,
+                            WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0, 
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 2 }}
         // new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com", FirstName = "Hareem", LastName = "Davila", OwnedPaint = 0, WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0},
         // new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com", FirstName = "Krzysztof", LastName = "Ponce", OwnedPaint = 0, WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0}
         //     // new UserInfoData { Email = "knott@example.com", FirstName = "Talia", LastName = "Knott"//,

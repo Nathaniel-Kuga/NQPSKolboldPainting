@@ -16,30 +16,33 @@ namespace KoboldPainting.Controllers
         private readonly IPaintRepository _paintRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IPaintTypeRepository _paintTypeRepository;
+        private readonly IKoboldUserRepository _koboldUserRepository;
 
         public PaintController(ILogger<PaintController> logger,
                                IPaintRepository paintRepository,
                                UserManager<ApplicationUser> userManager,
                                ICompanyRepository companyRepository,
-                               IPaintTypeRepository paintTypeRepository)
+                               IPaintTypeRepository paintTypeRepository,
+                               IKoboldUserRepository koboldUserRepository)
         {
             _logger = logger;
             _paintRepository = paintRepository;
             _userManager = userManager;
             _companyRepository = companyRepository;
             _paintTypeRepository = paintTypeRepository;
+            _koboldUserRepository = koboldUserRepository;
         }
         [Authorize]
-        public IActionResult MyPaints()
+        public async Task<IActionResult> MyPaints()
         {
-            var paintsVM = new PaintsViewModel();
-
-            var Companies = _companyRepository.GetAll().ToList();
-            var PaintTypes = _paintTypeRepository.GetAll().ToList();
-
-            paintsVM.Companies = Companies;
-            paintsVM.PaintTypes = PaintTypes;
-            
+            var currentUser = await _userManager.GetUserAsync(User);
+            var koboldUser = _koboldUserRepository.GetAll().FirstOrDefault(u => u.AspNetUserId == currentUser.Id);
+            var paintsVM = new PaintsViewModel
+            {
+                Companies = _companyRepository.GetAll().ToList(),
+                PaintTypes = _paintTypeRepository.GetAll().ToList(),
+                Paints = _paintRepository.GetUserOwnedPaints(koboldUser.Id)
+            };
             return View(paintsVM);
         }
 
