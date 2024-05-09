@@ -23,9 +23,8 @@ public partial class KoboldUser
     public string? LastName { get; set; }
 
     [InverseProperty("KoboldUser")]
-    public virtual ICollection<PaintRecipe> PaintRecipes { get; set; } = new List<PaintRecipe>();
+    public virtual ICollection<OwnedPaint> OwnedPaints { get; set; } = new List<OwnedPaint>();
 
-    [ForeignKey("KoboldUserId")]
-    [InverseProperty("KoboldUsers")]
-    public virtual ICollection<Paint> Paints { get; set; } = new List<Paint>();
+    [InverseProperty("KoboldUser")]
+    public virtual ICollection<PaintRecipe> PaintRecipes { get; set; } = new List<PaintRecipe>();
 }

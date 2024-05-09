@@ -25,11 +25,10 @@ public partial class Paint
     [InverseProperty("Paints")]
     public virtual Company? Company { get; set; }
 
+    [InverseProperty("Paint")]
+    public virtual ICollection<OwnedPaint> OwnedPaints { get; set; } = new List<OwnedPaint>();
+
     [ForeignKey("PaintTypeId")]
     [InverseProperty("Paints")]
     public virtual PaintType? PaintType { get; set; }
-
-    [ForeignKey("PaintId")]
-    [InverseProperty("Paints")]
-    public virtual ICollection<KoboldUser> KoboldUsers { get; set; } = new List<KoboldUser>();
 }

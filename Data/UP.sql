@@ -16,13 +16,13 @@ CREATE TABLE [Tutorials]
     [VideoUrl] nvarchar(500)
 )
 
-
 CREATE TABLE [OwnedPaint]
 (
+    [Id] INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
     [KoboldUserID] int,
-    [PaintID] int,
-    PRIMARY KEY ([KoboldUserID], [PaintID])
+    [PaintID] int
 )
+
 
 
 CREATE TABLE [WantedPaint]
