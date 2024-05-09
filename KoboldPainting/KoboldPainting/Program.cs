@@ -30,6 +30,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IPaintRepository, PaintRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
+builder.Services.AddScoped<IKoboldUserRepository, KoboldUserRepository>();
 var app = builder.Build();
 
 // ! Seed users
