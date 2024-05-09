@@ -53,5 +53,7 @@ namespace KoboldPainting.DAL.Concrete
 
             return paintsToReturn;
         }
+
+        public List<Paint> GetUserOwnedPaints(int userId) => GetAll().Where(p => p.OwnedPaints.Any(op => op.KoboldUserId == userId)).ToList();
     }
 }
