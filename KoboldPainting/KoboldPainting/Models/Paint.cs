@@ -28,4 +28,8 @@ public partial class Paint
     [ForeignKey("PaintTypeId")]
     [InverseProperty("Paints")]
     public virtual PaintType? PaintType { get; set; }
+
+    [ForeignKey("PaintId")]
+    [InverseProperty("Paints")]
+    public virtual ICollection<KoboldUser> KoboldUsers { get; set; } = new List<KoboldUser>();
 }

@@ -24,4 +24,8 @@ public partial class KoboldUser
 
     [InverseProperty("KoboldUser")]
     public virtual ICollection<PaintRecipe> PaintRecipes { get; set; } = new List<PaintRecipe>();
+
+    [ForeignKey("KoboldUserId")]
+    [InverseProperty("KoboldUsers")]
+    public virtual ICollection<Paint> Paints { get; set; } = new List<Paint>();
 }

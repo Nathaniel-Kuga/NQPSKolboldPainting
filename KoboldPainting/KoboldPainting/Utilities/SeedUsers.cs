@@ -56,6 +56,7 @@ public class SeedUsers
                             Description = "Test Description",
                         };
                         context.Add(koboldUserPaintRecipes);
+                        await context.SaveChangesAsync();
 
                         //! Causes error
                         // ! "Unable to track an instance of type 'WantedPaint' because it does not have a primary key. Only entity types with a primary key may be tracked."
@@ -67,12 +68,13 @@ public class SeedUsers
                         // };
                         // context.Add(koboldUserWantedPaint);
 
-                        // var koboldUserOwnedPaint = new OwnedPaint()
-                        // {
-                        //     KoboldUserId = kolboldUser.Id,
-                        //     KoboldUser = kolboldUser
-                        // };
-                        // context.Add(koboldUserOwnedPaint);
+                        var koboldUserOwnedPaint = new OwnedPaint()
+                        {
+                            KoboldUserId = kolboldUser.Id,
+                            KoboldUser = kolboldUser
+                        };
+                        context.Add(koboldUserOwnedPaint);
+                        await context.SaveChangesAsync();
                         // var koboldUserRefillPaint = new RefillPaint()
                         // {
                         //     KoboldUserId = kolboldUser.Id,

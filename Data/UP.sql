@@ -20,8 +20,10 @@ CREATE TABLE [Tutorials]
 CREATE TABLE [OwnedPaint]
 (
     [KoboldUserID] int,
-    [PaintID] int
+    [PaintID] int,
+    PRIMARY KEY ([KoboldUserID], [PaintID])
 )
+
 
 CREATE TABLE [WantedPaint]
 (
