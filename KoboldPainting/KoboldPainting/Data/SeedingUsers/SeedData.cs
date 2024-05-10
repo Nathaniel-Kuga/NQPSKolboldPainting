@@ -14,48 +14,10 @@ public class UserInfoData
     public string Email { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public int OwnedPaint { get; set; }
-    public int WantedPaint { get; set; }
-    public int RefillPaint { get; set; }
     public int PaintRecipe { get; set; }
-
-    // public List<PaintRecipe> UserPaintRecipes { get; set; } = new List<PaintRecipe>()
-    // {
-    //     // new PaintRecipe
-    //     // {
-    //     //     RecipeName = "Test Recipe",
-    //     //     Description = "This is a test recipe",
-    //     //     KolboldUserId = 1
-    //     // }
-    // };
     public List<OwnedPaint> UserOwnedPaints { get; set; } = new List<OwnedPaint>();
-    // public List<WantedPaint> UserWantedPaints { get; set; } = new List<WantedPaint>()
-    // {
-    //     // new WantedPaint
-    //     // {
-    //     //     PaintId = 1,
-    //     //     KolboldUserId = 1
-    //     // }
-    // };
-    // public List<RefillPaint> UserRefillPaints { get; set; } = new List<RefillPaint>()
-    // {
-    //     // new RefillPaint
-    //     // {
-    //     //     PaintId = 1,
-    //     //     KolboldUserId = 1
-    //     // }
-    // };
-    // public List<Tutorial> UserTutorials { get; set; } = new List<Tutorial>()
-    // {
-    //     // new Tutorial
-    //     // {
-    //     //     KolboldUserId = 1,
-    //     //     VideoUrl = "SomeURL"
-    //     // }
-    // };
-    // // {
-
-    // };
+    public List<WantedPaint> UserWantedPaints { get; set; } = new List<WantedPaint>();
+    public List<RefillPaint> UserRefillPaints { get; set; } = new List<RefillPaint>();
 }
 [ExcludeFromCodeCoverage]
 public class SeedData
@@ -66,43 +28,29 @@ public class SeedData
     public static readonly UserInfoData[] UserSeedData = new UserInfoData[]
     {
         new UserInfoData { UserName = "TaliaK", Email = "knott@example.com",
-                            FirstName = "Talia", LastName = "Knott", OwnedPaint = 1,
-                            WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0,
-                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 1 }}},
+                            FirstName = "Talia", LastName = "Knott", PaintRecipe = 0,
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 1 },
+                                                                     new OwnedPaint { PaintId = 2, KoboldUserId = 1 },
+                                                                     new OwnedPaint { PaintId = 3, KoboldUserId = 1 }},
+                            UserWantedPaints = new List<WantedPaint> { new WantedPaint { PaintId = 4, KoboldUserId = 1 }},
+                            UserRefillPaints = new List<RefillPaint> { new RefillPaint { PaintId = 1, KoboldUserId = 1 }}},
         new UserInfoData { UserName = "ZaydenC", Email = "clark@example.com",
-                            FirstName = "Zayden", LastName = "Clark", OwnedPaint = 0,
-                            WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0, 
-                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 2 }}
-        // new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com", FirstName = "Hareem", LastName = "Davila", OwnedPaint = 0, WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0},
-        // new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com", FirstName = "Krzysztof", LastName = "Ponce", OwnedPaint = 0, WantedPaint = 0, RefillPaint = 0, PaintRecipe = 0}
-        //     // new UserInfoData { Email = "knott@example.com", FirstName = "Talia", LastName = "Knott"//,
-            //                 //    UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { KolboldUserId = 1 } },
-            //                 //    UserPaintRecipes = new List<PaintRecipe> { new PaintRecipe { KolboldUserId = 1 } },
-            //                 //    UserWantedPaints = new List<WantedPaint> { new WantedPaint { KolboldUserId = 1 } },
-            //                 //    UserRefillPaints = new List<RefillPaint> { new RefillPaint { KolboldUserId = 1 } },
-            //                 //    UserTutorials = new List<Tutorial> { new Tutorial { KolboldUserId = 1 } }
-            // },
-        }
+                            FirstName = "Zayden", LastName = "Clark", PaintRecipe = 0,
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 2 }},
+                            UserWantedPaints = new List<WantedPaint> { new WantedPaint { PaintId = 2, KoboldUserId = 2 }},
+                            UserRefillPaints = new List<RefillPaint> { new RefillPaint { PaintId = 1, KoboldUserId = 2 }}},
+        new UserInfoData { UserName = "DavilaH", Email = "hareem@example.com",
+                            FirstName = "Hareem", LastName = "Davila", PaintRecipe = 0,
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 3 },
+                                                                     new OwnedPaint { PaintId = 2, KoboldUserId = 3 }},
+                            UserWantedPaints = new List<WantedPaint> { new WantedPaint { PaintId = 3, KoboldUserId = 3 }},
+                            UserRefillPaints = new List<RefillPaint> { new RefillPaint { PaintId = 1, KoboldUserId = 3 }}},
+        new UserInfoData { UserName = "KrzysztofP", Email = "krzysztof@example.com",
+                            FirstName = "Krzysztof", LastName = "Ponce", PaintRecipe = 0,
+                            UserOwnedPaints = new List<OwnedPaint> { new OwnedPaint { PaintId = 1, KoboldUserId = 3 },
+                                                                     new OwnedPaint { PaintId = 2, KoboldUserId = 3 },
+                                                                     new OwnedPaint { PaintId = 3, KoboldUserId = 3 }},
+                            UserWantedPaints = new List<WantedPaint> { new WantedPaint { PaintId = 4, KoboldUserId = 3 }},
+                            UserRefillPaints = new List<RefillPaint> { new RefillPaint { PaintId = 1, KoboldUserId = 3 }}},
     };
 }
-
-
-//     public List<PersonList> ListKindNames { get; set; } = new List<>
-//     {
-//         new PersonList
-//         {
-//             ListKind = "Currently Playing",
-//             ListKindId = 1
-//         },
-//         new PersonList
-//         {
-//             ListKind = "Completed",
-//             ListKindId = 2
-//         },
-//         new PersonList
-//         {
-//             ListKind = "Want to Play",
-//             ListKindId = 3
-//         }
-//     };
-// }
