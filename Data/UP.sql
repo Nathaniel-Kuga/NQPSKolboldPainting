@@ -27,12 +27,14 @@ CREATE TABLE [OwnedPaint]
 
 CREATE TABLE [WantedPaint]
 (
+    [Id] INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
     [KoboldUserID] int,
     [PaintID] int
 )
 
 CREATE TABLE [RefillPaint]
 (
+    [Id] INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
     [KoboldUserID] int,
     [PaintID] int
 )
