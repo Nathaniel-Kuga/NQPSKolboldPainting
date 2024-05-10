@@ -50,6 +50,8 @@ public class SeedUsers
                         context.Add(kolboldUser);
                         await context.SaveChangesAsync();
                         await SeedOwnedPaints(context, u);
+                        await SeedWantedPaints(context, u);
+                        await SeedRefillPaints(context, u);
                     }
                 }
             }
@@ -76,19 +78,39 @@ public class SeedUsers
             }
             // Save the changes
             await context.SaveChangesAsync();
-            // // Check if any owned paints exist
-            // if (!context.OwnedPaint.Any())
-            // {
-
-            //     // Add the owned paints to the context
-            //     await context.OwnedPaint.AddRangeAsync(ownedPaints);
-
-            //     // Save the changes
-            //     await context.SaveChangesAsync();
-            // }
         }
     }
 
+    public static async Task SeedWantedPaints(KoboldPaintingDbContext context, UserInfoData user)
+    {
+        var koboldUser = context.KoboldUsers.FirstOrDefault(u => u.FirstName == user.FirstName && u.LastName == user.LastName);
+        if (koboldUser != null)
+        {
+            // Iterate over the OwnedPaints of the user
+            foreach (var wantedPaint in user.UserWantedPaints)
+            {
+                // Add the owned paint to the context
+                context.WantedPaints.Add(wantedPaint);
+            }
+            // Save the changes
+            await context.SaveChangesAsync();
+        }
+    }
+    public static async Task SeedRefillPaints(KoboldPaintingDbContext context, UserInfoData user)
+    {
+        var koboldUser = context.KoboldUsers.FirstOrDefault(u => u.FirstName == user.FirstName && u.LastName == user.LastName);
+        if (koboldUser != null)
+        {
+            // Iterate over the OwnedPaints of the user
+            foreach (var refillPaint in user.UserRefillPaints)
+            {
+                // Add the owned paint to the context
+                context.RefillPaints.Add(refillPaint);
+            }
+            // Save the changes
+            await context.SaveChangesAsync();
+        }
+    }
 
     /// <summary>
     /// Helper method to ensure that the Identity user exists or has been newly created.  Modified from

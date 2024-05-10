@@ -37,13 +37,18 @@ namespace KoboldPainting.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var koboldUser = _koboldUserRepository.GetAll().FirstOrDefault(u => u.AspNetUserId == currentUser.Id);
-            var paintsVM = new PaintsViewModel
+            if (koboldUser != null)
             {
-                Companies = _companyRepository.GetAll().ToList(),
-                PaintTypes = _paintTypeRepository.GetAll().ToList(),
-                Paints = _paintRepository.GetUserOwnedPaints(koboldUser.Id)
-            };
-            return View(paintsVM);
+                var myPaintsVM = new MyPaintsViewModel
+                {
+                    OwnedPaints = _paintRepository.GetUserOwnedPaints(koboldUser.Id).ToList(),
+                    WantedPaints = _paintRepository.GetUserWantedPaints(koboldUser.Id).ToList(),
+                    RefillPaints = _paintRepository.GetUserRefillPaints(koboldUser.Id).ToList()
+                };
+                return View(myPaintsVM);
+            }
+            return RedirectToAction("Index", "Home");
+
         }
 
         // [HttpPost]

@@ -55,5 +55,8 @@ namespace KoboldPainting.DAL.Concrete
         }
 
         public List<Paint> GetUserOwnedPaints(int userId) => GetAll().Where(p => p.OwnedPaints.Any(op => op.KoboldUserId == userId)).ToList();
+        public List<Paint> GetUserWantedPaints(int userId) => GetAll().Where(p => p.WantedPaints.Any(op => op.KoboldUserId == userId)).ToList();
+        public List<Paint> GetUserRefillPaints(int userId) => GetAll().Where(p => p.RefillPaints.Any(op => op.KoboldUserId == userId)).ToList();
+
     }
 }

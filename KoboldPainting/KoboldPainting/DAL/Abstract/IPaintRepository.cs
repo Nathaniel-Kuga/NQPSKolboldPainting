@@ -21,6 +21,19 @@ namespace KoboldPainting.DAL.Abstract
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Returns List of Type Paint</returns>
-         public List<Paint> GetUserOwnedPaints(int userId);
+        public List<Paint> GetUserOwnedPaints(int userId);
+        /// <summary>
+        /// Get all paints that are wanted by a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Returns List of Type Paint</returns>
+        public List<Paint> GetUserWantedPaints(int userId);
+        /// <summary>
+        /// Get all paints that need to be refilled by a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Returns List of Type Paint</returns>
+        public List<Paint> GetUserRefillPaints(int userId);
+        
     }
 }
