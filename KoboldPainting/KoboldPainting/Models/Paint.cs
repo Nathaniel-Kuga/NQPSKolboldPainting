@@ -31,4 +31,10 @@ public partial class Paint
     [ForeignKey("PaintTypeId")]
     [InverseProperty("Paints")]
     public virtual PaintType? PaintType { get; set; }
+
+    [InverseProperty("Paint")]
+    public virtual ICollection<RefillPaint> RefillPaints { get; set; } = new List<RefillPaint>();
+
+    [InverseProperty("Paint")]
+    public virtual ICollection<WantedPaint> WantedPaints { get; set; } = new List<WantedPaint>();
 }
