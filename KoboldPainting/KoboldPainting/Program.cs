@@ -30,16 +30,17 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IPaintRepository, PaintRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
+builder.Services.AddScoped<IKoboldUserRepository, KoboldUserRepository>();
 var app = builder.Build();
 
 // ! Seed users
 // ! turn off for azure
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
    var services = scope.ServiceProvider;
    try
    {
-       //This only works locally not on azure
+       // !This only works locally not on azure
        string testUserPW = builder.Configuration["KoboldPainting:SeededUserPW"];
        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
    }
@@ -48,7 +49,7 @@ var app = builder.Build();
        Console.WriteLine(e);
        throw new Exception("Couldn't seed users.");
    }
-}*/
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

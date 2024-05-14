@@ -19,4 +19,5 @@ public class PaintsViewModel
     public string ResultMessage { get; set; } = "";
     public bool IsSuccess { get; set; } = false;
     public bool IsFormSubmitted { get; set; } = false;
+    public List<Paint> Paints { get; set; } = new List<Paint>();
 }

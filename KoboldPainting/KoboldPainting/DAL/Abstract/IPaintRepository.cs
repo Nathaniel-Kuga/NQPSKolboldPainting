@@ -16,5 +16,24 @@ namespace KoboldPainting.DAL.Abstract
         public List<Paint> FuzzySearch(string paintName, int percentage);
 
         public List<Paint> searchPaints(string PaintName, int CompanyID);
+        /// <summary>
+        /// Get all paints that are owned by a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Returns List of Type Paint</returns>
+        public List<Paint> GetUserOwnedPaints(int userId);
+        /// <summary>
+        /// Get all paints that are wanted by a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Returns List of Type Paint</returns>
+        public List<Paint> GetUserWantedPaints(int userId);
+        /// <summary>
+        /// Get all paints that need to be refilled by a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>Returns List of Type Paint</returns>
+        public List<Paint> GetUserRefillPaints(int userId);
+        
     }
 }
