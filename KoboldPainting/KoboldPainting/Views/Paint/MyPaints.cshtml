@@ -1,11 +1,105 @@
-@model KoboldPainting.Models.PaintsViewModel
+@using Microsoft.IdentityModel.Tokens
+@model KoboldPainting.Models.MyPaintsViewModel
 
 @{
     ViewData["Title"] = "My Paints";
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 card myPaintsPageCard welcomeDiv">
         <h1 class="display-4">My Paints</h1>
     </div>
-</div
+    <div class="col-12 welcomeDiv">
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="3"><b>Owned Paints</b></th>
+                </tr>
+                <tr>
+                    <th>Paint Name</th>
+                    <th>Company</th>
+                    <th>Paint Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.OwnedPaints.IsNullOrEmpty())
+                {
+                    @* Do nothing *@
+                }
+                else
+                {
+                    @foreach (var paint in Model.OwnedPaints)
+                    {
+                        <tr>
+                            <td>@paint.PaintName</td>
+                            <td>@paint.Company.CompanyName</td>
+                            <td>@paint.PaintType.TypeOfPaint</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 welcomeDiv">
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="3"><b>Wanted Paints</b></th>
+                </tr>
+                <tr>
+                    <th>Paint Name</th>
+                    <th>Company</th>
+                    <th>Paint Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.WantedPaints.IsNullOrEmpty())
+                {
+                    @* Do nothing *@
+                }
+                else
+                {
+                    @foreach (var paint in Model.WantedPaints)
+                    {
+                        <tr>
+                            <td>@paint.PaintName</td>
+                            <td>@paint.Company.CompanyName</td>
+                            <td>@paint.PaintType.TypeOfPaint</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 welcomeDiv">
+        <table class="table table-dark table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="3"><b>Refill Paints</b></th>
+                </tr>
+                <tr>
+                    <th>Paint Name</th>
+                    <th>Company</th>
+                    <th>Paint Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.RefillPaints.IsNullOrEmpty())
+                {
+                    @* Do nothing *@
+                }
+                else
+                {
+                    @foreach (var paint in Model.RefillPaints)
+                    {
+                        <tr>
+                            <td>@paint.PaintName</td>
+                            <td>@paint.Company.CompanyName</td>
+                            <td>@paint.PaintType.TypeOfPaint</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

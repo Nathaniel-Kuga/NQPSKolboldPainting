@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KoboldPainting.Models;
 
-[Keyless]
 [Table("OwnedPaint")]
 public partial class OwnedPaint
 {
+    [Key]
+    public int Id { get; set; }
+
     [Column("KoboldUserID")]
     public int? KoboldUserId { get; set; }
 
@@ -17,8 +19,10 @@ public partial class OwnedPaint
     public int? PaintId { get; set; }
 
     [ForeignKey("KoboldUserId")]
+    [InverseProperty("OwnedPaints")]
     public virtual KoboldUser? KoboldUser { get; set; }
 
     [ForeignKey("PaintId")]
+    [InverseProperty("OwnedPaints")]
     public virtual Paint? Paint { get; set; }
 }

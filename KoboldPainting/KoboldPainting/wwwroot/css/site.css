@@ -45,3 +45,8 @@ body {
 .identityDiv h3 {
   color: black;
 }
+
+.myPaintsPageCard {
+  background: linear-gradient(to bottom, #07cc, #00ddee);
+  border-radius: 10px; 
+}
