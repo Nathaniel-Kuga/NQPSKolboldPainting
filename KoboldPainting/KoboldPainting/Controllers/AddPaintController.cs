@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KoboldPainting.Models;
 using KoboldPainting.Models.DataTransferObjects;
+using KoboldPainting.DAL.Abstract;
 namespace KoboldPainting.Controllers
 {
     [Route("api/[controller]")]
@@ -14,11 +15,17 @@ namespace KoboldPainting.Controllers
     public class AddPaintController : ControllerBase
     {
         private readonly KoboldPaintingDbContext _context;
-
-        public AddPaintController(KoboldPaintingDbContext context)
+        private readonly IPaintRepository _paintRepository;
+        private readonly IOwnedPaintRepository _ownedPaintRepository;
+        private readonly IWantedPaintRepository _wantedPaintRepository;
+        public AddPaintController(KoboldPaintingDbContext context, IPaintRepository paintRepository, IOwnedPaintRepository ownedPaintRepository, IWantedPaintRepository wantedPaintRepository)
         {
             _context = context;
+            _paintRepository = paintRepository;
+            _ownedPaintRepository = ownedPaintRepository;
+            _wantedPaintRepository = wantedPaintRepository;
         }
+
 
         // // GET: api/AddPaint
         // [HttpGet]
@@ -122,8 +129,27 @@ namespace KoboldPainting.Controllers
 
             // if (paintDto == null) return BadRequest();
             // Your code here
+            if (paintDto.List == "Owned")
+            {
+                OwnedPaint ownedPaint = new OwnedPaint();
+                //ownedPaint.Paint = _paintRepository.GetPaintByName(paintDto.Name);
+                //_ownedPaintRepository.;
+                //get paint
+                //get user
+                //add to owned paint table
+            }
+            else if (paintDto.List == "Wanted")
+            {
+                //get paint
+                //get user
+                //add to wanted paint table
+            }
+            else
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            return Ok("Successfully updated db.");
         } 
         private bool PaintExists(int id)
         {

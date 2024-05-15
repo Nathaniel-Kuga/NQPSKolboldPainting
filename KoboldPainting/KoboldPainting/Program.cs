@@ -33,6 +33,8 @@ builder.Services.AddScoped<IPaintRepository, PaintRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
 builder.Services.AddScoped<IKoboldUserRepository, KoboldUserRepository>();
+builder.Services.AddScoped<IOwnedPaintRepository, OwnedPaintRepository>();
+builder.Services.AddScoped<IWantedPaintRepository, WantedPaintRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
