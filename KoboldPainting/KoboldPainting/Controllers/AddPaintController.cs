@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KoboldPainting.Models;
-
+using KoboldPainting.Models.DataTransferObjects;
 namespace KoboldPainting.Controllers
 {
     [Route("api/[controller]")]
@@ -20,25 +20,25 @@ namespace KoboldPainting.Controllers
             _context = context;
         }
 
-        // GET: api/AddPaint
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Paint>>> GetPaints()
-        {
-          if (_context.Paints == null)
-          {
-              return NotFound();
-          }
-            return await _context.Paints.ToListAsync();
-        }
+        // // GET: api/AddPaint
+        // [HttpGet]
+        // public async Task<ActionResult<IEnumerable<Paint>>> GetPaints()
+        // {
+        //   if (_context.Paints == null)
+        //   {
+        //       return NotFound();
+        //   }
+        //     return await _context.Paints.ToListAsync();
+        // }
 
         // GET: api/AddPaint/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Paint>> GetPaint(int id)
         {
-          if (_context.Paints == null)
-          {
-              return NotFound();
-          }
+            if (_context.Paints == null)
+            {
+                return NotFound();
+            }
             var paint = await _context.Paints.FindAsync(id);
 
             if (paint == null)
@@ -85,10 +85,10 @@ namespace KoboldPainting.Controllers
         [HttpPost]
         public async Task<ActionResult<Paint>> PostPaint(Paint paint)
         {
-          if (_context.Paints == null)
-          {
-              return Problem("Entity set 'KoboldPaintingDbContext.Paints'  is null.");
-          }
+            if (_context.Paints == null)
+            {
+                return Problem("Entity set 'KoboldPaintingDbContext.Paints'  is null.");
+            }
             _context.Paints.Add(paint);
             await _context.SaveChangesAsync();
 
@@ -114,10 +114,22 @@ namespace KoboldPainting.Controllers
 
             return NoContent();
         }
+        //Post : api/AddPaintToCollection 
+        // POST: api/AddPaint/AddPaintToCollection
+        [HttpPost("AddPaintToCollection")]
+        public async Task<ActionResult> AddPaintToCollection([FromBody] PaintDto paintDto)
+        {
 
+            // if (paintDto == null) return BadRequest();
+            // Your code here
+
+            return Ok();
+        } 
         private bool PaintExists(int id)
         {
             return (_context.Paints?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
+
+
 }
