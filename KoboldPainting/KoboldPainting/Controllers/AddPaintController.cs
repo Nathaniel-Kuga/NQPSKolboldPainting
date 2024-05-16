@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using KoboldPainting.Models;
 using KoboldPainting.Models.DataTransferObjects;
 using KoboldPainting.DAL.Abstract;
+using Microsoft.AspNetCore.Identity;
+using KoboldPainting.Areas.Identity.Data;
 namespace KoboldPainting.Controllers
 {
     [Route("api/[controller]")]
@@ -15,12 +17,21 @@ namespace KoboldPainting.Controllers
     public class AddPaintController : ControllerBase
     {
         private readonly KoboldPaintingDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IKoboldUserRepository _koboldUserRepository;
         private readonly IPaintRepository _paintRepository;
         private readonly IOwnedPaintRepository _ownedPaintRepository;
         private readonly IWantedPaintRepository _wantedPaintRepository;
-        public AddPaintController(KoboldPaintingDbContext context, IPaintRepository paintRepository, IOwnedPaintRepository ownedPaintRepository, IWantedPaintRepository wantedPaintRepository)
+        public AddPaintController(KoboldPaintingDbContext context,
+                                  UserManager<ApplicationUser> userManager,
+                                  IKoboldUserRepository koboldUserRepository,
+                                  IPaintRepository paintRepository,
+                                  IOwnedPaintRepository ownedPaintRepository,
+                                  IWantedPaintRepository wantedPaintRepository)
         {
             _context = context;
+            _userManager = userManager;
+            _koboldUserRepository = koboldUserRepository;
             _paintRepository = paintRepository;
             _ownedPaintRepository = ownedPaintRepository;
             _wantedPaintRepository = wantedPaintRepository;
@@ -131,12 +142,25 @@ namespace KoboldPainting.Controllers
             // Your code here
             if (paintDto.List == "Owned")
             {
-                OwnedPaint ownedPaint = new OwnedPaint();
-                //ownedPaint.Paint = _paintRepository.GetPaintByName(paintDto.Name);
-                //_ownedPaintRepository.;
-                //get paint
-                //get user
-                //add to owned paint table
+                //! check for duplicate entry
+                var currentUser = await _userManager.GetUserAsync(User);
+                var koboldUser = _koboldUserRepository.GetAll().FirstOrDefault(u => u.AspNetUserId == currentUser.Id);
+                var check = await _ownedPaintRepository.GetUserOwnedPaintsAsync(koboldUser.Id);
+                if (check.Any(op => op.Paint.PaintName == paintDto.Name && op.Paint.Company.CompanyName == paintDto.Company))
+                {
+                    return BadRequest("You already own that paint.");
+                }
+                //! if not duplicate, proceed.
+                var paint = _paintRepository.GetPaintByCompanyAndName(paintDto.Company, paintDto.Name);
+                try 
+                {
+                    var result = await _ownedPaintRepository.AddToOwnedPaints(koboldUser, paint);
+                    return Ok("Successfully added to owned paints.");
+                }
+                catch (ArgumentNullException e) 
+                {
+                    return BadRequest(e);
+                }
             }
             else if (paintDto.List == "Wanted")
             {
@@ -150,7 +174,7 @@ namespace KoboldPainting.Controllers
             }
 
             return Ok("Successfully updated db.");
-        } 
+        }
         private bool PaintExists(int id)
         {
             return (_context.Paints?.Any(e => e.Id == id)).GetValueOrDefault();
