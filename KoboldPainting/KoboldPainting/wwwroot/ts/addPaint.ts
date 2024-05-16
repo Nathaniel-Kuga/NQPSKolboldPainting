@@ -37,7 +37,7 @@ addPaintForm.addEventListener('submit', (event) => {
             alert(response);
         },
         error: function (response) {
-            alert(response);
+            alert(response.responseText);
         }
     });
 });
