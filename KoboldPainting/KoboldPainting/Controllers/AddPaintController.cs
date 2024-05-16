@@ -138,8 +138,6 @@ namespace KoboldPainting.Controllers
         public async Task<ActionResult> AddPaintToCollection([FromBody] PaintDto paintDto)
         {
 
-            // if (paintDto == null) return BadRequest();
-            // Your code here
             if (paintDto.List == "Owned")
             {
                 //! check for duplicate entry
@@ -164,6 +162,25 @@ namespace KoboldPainting.Controllers
             }
             else if (paintDto.List == "Wanted")
             {
+                                //! check for duplicate entry
+                var currentUser = await _userManager.GetUserAsync(User);
+                var koboldUser = _koboldUserRepository.GetAll().FirstOrDefault(u => u.AspNetUserId == currentUser.Id);
+                var check = await _wantedPaintRepository.GetUserWantedPaintsAsync(koboldUser.Id);
+                if (check.Any(op => op.Paint.PaintName == paintDto.Name && op.Paint.Company.CompanyName == paintDto.Company))
+                {
+                    return BadRequest("You already own that paint.");
+                }
+                //! if not duplicate, proceed.
+                var paint = _paintRepository.GetPaintByCompanyAndName(paintDto.Company, paintDto.Name);
+                try 
+                {
+                    var result = await _ownedPaintRepository.AddToOwnedPaints(koboldUser, paint);
+                    return Ok("Successfully added to owned paints.");
+                }
+                catch (ArgumentNullException e) 
+                {
+                    return BadRequest(e);
+                }
                 //get paint
                 //get user
                 //add to wanted paint table
