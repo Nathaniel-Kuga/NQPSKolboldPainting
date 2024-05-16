@@ -1,5 +1,3 @@
-import { AddPaintDto } from "./addPaintDto";
-
 console.log('addPaint.ts loaded');
 const table = document.getElementById('paintTable');
 let rowData: string[] = [];
@@ -19,52 +17,27 @@ table.addEventListener('click', (event) => {
         console.log(rowData);
     }
 });
-const addPaintForm = document.getElementById('addPaintForm');
 
+const addPaintForm = document.getElementById('addPaintForm');
 addPaintForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const selectedList = document.getElementById('listName') as HTMLSelectElement;
-    // const addPaintDto = new AddPaintDto(rowData[0], rowData[1], selectedList.value);
-    // console.log(addPaintDto);
     const paintDto = {
         name: rowData[0],
         company: rowData[1],
         list: selectedList.value
     };
     console.log(paintDto);
-    const s: string = 'Hello';
     $.ajax({
         url: '/api/AddPaint/AddPaintToCollection',
         type: 'POST',
         data: JSON.stringify(paintDto),
         contentType: 'application/json',
         success: function (response) {
-            //console.log(response);
             alert(response);
         },
         error: function (response) {
-            console.log(response);
+            alert(response);
         }
     });
-
-    // // Perform any necessary processing or API calls
-
-    // // Reset the form
-    // addPaintForm.reset();
 });
-
-// $('#testbtn').on('click', () => {
-//     alert('test');
-//     $.ajax({
-//         url: '/api/AddPaint/AddPaintToCollection',
-//         type: 'POST',
-//         success: function(response) {
-//             // Handle the response here
-//             console.log(response);
-//         },
-//         error: function(error) {
-//             // Handle error here
-//             console.error(error);
-//         }
-//     });
-// }); 
