@@ -7,33 +7,8 @@ namespace KoboldPainting.DAL.Abstract
     /// </summary>
     public interface IOwnedPaintRepository : IRepository<OwnedPaint>
     {
-        // // Add any additional methods needed for Paint entities
-        // /// <summary>
-        // /// Performs a Fuzzy String comparison on the paint name
-        // /// </summary>
-        // /// <param name="paintName"></param>
-        // /// <returns>Resturns list of games that contain the paint name</returns>
-        // public List<Paint> FuzzySearch(string paintName, int percentage);
-
-        // public List<Paint> searchPaints(string PaintName, int CompanyID);
-        // /// <summary>
-        // /// Get all paints that are owned by a user
-        // /// </summary>
-        // /// <param name="userId"></param>
-        // /// <returns>Returns List of Type Paint</returns>
-        // public List<Paint> GetUserOwnedPaints(int userId);
-        // /// <summary>
-        // /// Get all paints that are wanted by a user
-        // /// </summary>
-        // /// <param name="userId"></param>
-        // /// <returns>Returns List of Type Paint</returns>
-        // public List<Paint> GetUserWantedPaints(int userId);
-        // /// <summary>
-        // /// Get all paints that need to be refilled by a user
-        // /// </summary>
-        // /// <param name="userId"></param>
-        // /// <returns>Returns List of Type Paint</returns>
-        // public List<Paint> GetUserRefillPaints(int userId);
+        public Task<List<OwnedPaint>> GetUserOwnedPaintsAsync(int userId);       
         
+        public Task<bool> AddToOwnedPaints(KoboldUser koboldUser, Paint paint);
     }
 }
