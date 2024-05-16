@@ -28,7 +28,7 @@ addPaintForm.addEventListener('submit', (event) => {
     // console.log(addPaintDto);
     const paintDto = {
         name: rowData[0],
-        brand: rowData[1],
+        company: rowData[1],
         list: selectedList.value
     };
     console.log(paintDto);
