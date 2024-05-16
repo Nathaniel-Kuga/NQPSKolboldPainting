@@ -137,7 +137,6 @@ namespace KoboldPainting.Controllers
         [HttpPost("AddPaintToCollection")]
         public async Task<ActionResult> AddPaintToCollection([FromBody] PaintDto paintDto)
         {
-
             if (paintDto.List == "Owned")
             {
                 //! check for duplicate entry
@@ -153,7 +152,8 @@ namespace KoboldPainting.Controllers
                 try 
                 {
                     var result = await _ownedPaintRepository.AddToOwnedPaints(koboldUser, paint);
-                    return Ok("Successfully added to owned paints.");
+                    if (result) return Ok("Successfully added to owned paints.");
+                    else return BadRequest("Failed to add to owned paints.");
                 }
                 catch (ArgumentNullException e) 
                 {
@@ -162,35 +162,31 @@ namespace KoboldPainting.Controllers
             }
             else if (paintDto.List == "Wanted")
             {
-                                //! check for duplicate entry
+                //! check for duplicate entry
                 var currentUser = await _userManager.GetUserAsync(User);
                 var koboldUser = _koboldUserRepository.GetAll().FirstOrDefault(u => u.AspNetUserId == currentUser.Id);
                 var check = await _wantedPaintRepository.GetUserWantedPaintsAsync(koboldUser.Id);
                 if (check.Any(op => op.Paint.PaintName == paintDto.Name && op.Paint.Company.CompanyName == paintDto.Company))
                 {
-                    return BadRequest("You already own that paint.");
+                    return BadRequest("You already wanted that paint.");
                 }
                 //! if not duplicate, proceed.
                 var paint = _paintRepository.GetPaintByCompanyAndName(paintDto.Company, paintDto.Name);
                 try 
                 {
-                    var result = await _ownedPaintRepository.AddToOwnedPaints(koboldUser, paint);
-                    return Ok("Successfully added to owned paints.");
+                    var result = await _wantedPaintRepository.AddToWantedPaints(koboldUser, paint);
+                    if (result) return Ok("Successfully added to wanted paints.");
+                    else return BadRequest("Failed to add to wanted paints.");
                 }
                 catch (ArgumentNullException e) 
                 {
                     return BadRequest(e);
                 }
-                //get paint
-                //get user
-                //add to wanted paint table
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Invalid list type.");
             }
-
-            return Ok("Successfully updated db.");
         }
         private bool PaintExists(int id)
         {
