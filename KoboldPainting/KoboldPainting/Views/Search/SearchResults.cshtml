@@ -32,25 +32,28 @@
     bool showAddPaints = Model.Paints.IsNullOrEmpty();
     if (!showAddPaints)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Brand</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var paint in Model.Paints)
-                {
+        <div class="table-responsive">
+            <table id="paintTable" class="table">
+                <thead>
                     <tr>
-                        <td>@paint.PaintName</td>
-                        <td>@paint.Company.CompanyName</td>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Add</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
 
-            </tbody>
-        </table>
+                    @foreach (var paint in Model.Paints)
+                    {
+                        <tr>
+                            <td>@paint.PaintName</td>
+                            <td>@paint.Company.CompanyName</td>
+                            <td><button class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#AddPaint">Add</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else
     {
@@ -98,4 +101,39 @@
             <button type="submit" class="btn btn-primary">Add Paint</button>
         </form>
     }
+}
+<div class="modal fade" id="AddPaint" tabindex="-1" aria-labelledby="paintFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jobFormModalLabel">Add Paint to Collection!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <form id="addPaintForm" method="post">
+                        <div>
+                            <label for="listName">List Name</label>
+                            <br />
+                            <select id="listName" name="listName">
+                                <option value="Owned">Owned</option>
+                                <option value="Wanted">Wanted</option>
+                            </select>
+                        </div>
+                        @*asp-action="AddList"*@
+                        <input id="formSubmit" type="submit" data-bs-dismiss="modal" class="btn btn-warning"
+                            value="Add Paint" />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@section Scripts{
+    <script type="module" src="~/js/addPaint.js"></script>
 }

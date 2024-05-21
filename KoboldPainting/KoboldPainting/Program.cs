@@ -3,6 +3,8 @@ using KoboldPainting.DAL.Abstract;
 using KoboldPainting.DAL.Concrete;
 using KoboldPainting.Data;
 using KoboldPainting.Data.SeedingUsers;
+using Microsoft.Extensions.DependencyInjection;
+
 using KoboldPainting.Models;
 using KoboldPainting.Utilities;
 using Microsoft.AspNetCore.Identity;
@@ -31,30 +33,39 @@ builder.Services.AddScoped<IPaintRepository, PaintRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IPaintTypeRepository, PaintTypeRepository>();
 builder.Services.AddScoped<IKoboldUserRepository, KoboldUserRepository>();
+builder.Services.AddScoped<IOwnedPaintRepository, OwnedPaintRepository>();
+builder.Services.AddScoped<IWantedPaintRepository, WantedPaintRepository>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 var app = builder.Build();
 
 // ! Seed users
 // ! turn off for azure
 using (var scope = app.Services.CreateScope())
 {
-   var services = scope.ServiceProvider;
-   try
-   {
-       // !This only works locally not on azure
-       string testUserPW = builder.Configuration["KoboldPainting:SeededUserPW"];
-       SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
-   }
-   catch (Exception e)
-   {
-       Console.WriteLine(e);
-       throw new Exception("Couldn't seed users.");
-   }
+    var services = scope.ServiceProvider;
+    try
+    {
+        // !This only works locally not on azure
+        string testUserPW = builder.Configuration["KoboldPainting:SeededUserPW"];
+        SeedUsers.Initialize(services, SeedData.UserSeedData, testUserPW).Wait();
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+        throw new Exception("Couldn't seed users.");
+    }
 }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {

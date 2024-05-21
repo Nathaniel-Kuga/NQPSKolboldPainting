@@ -83,7 +83,17 @@ namespace KoboldPainting.DAL.Concrete
             _context.SaveChanges();
             return entity;
         }
-
+        public virtual async Task<TEntity> AddOrUpdateAsync(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Entity must not be null to add or update");
+            }
+            _context.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        
         public virtual void Delete(TEntity entity)
         {
             if (entity == null)
