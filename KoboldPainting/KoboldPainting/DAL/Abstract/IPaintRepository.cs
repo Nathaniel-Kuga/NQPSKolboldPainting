@@ -34,6 +34,13 @@ namespace KoboldPainting.DAL.Abstract
         /// <param name="userId"></param>
         /// <returns>Returns List of Type Paint</returns>
         public List<Paint> GetUserRefillPaints(int userId);
+        /// <summary>
+        /// Get a paint by its Company and name
+        /// </summary>
+        /// <param name="brand"></param>
+        /// <param name="name"></param>
+        /// <returns>Returns a paint</returns>
+        public Paint GetPaintByCompanyAndName(string brand, string name);
         
     }
 }
